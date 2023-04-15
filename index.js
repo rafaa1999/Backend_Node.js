@@ -25,7 +25,7 @@ app.post('/users', async (req, res) => {
   res.send("success");
 })
 
-app.get('/users', async (req, res) => {
+const pagination = (req, res, next) => {
   const pageAsNumber = Number.parseInt(req.query.page);
   const sizeAsNumber = Number.parseInt(req.query.size);
 
@@ -38,6 +38,14 @@ app.get('/users', async (req, res) => {
   if(!Number.isNaN(sizeAsNumber) && !(sizeAsNumber > 10) && !(sizeAsNumber < 1)){
     size = sizeAsNumber;
   }
+  req.pagination = {
+    page, size
+  }
+  next();
+}
+
+app.get('/users', pagination, async (req, res) => {
+  const { page, size } = req.pagination;
 
   const usersWithCount = await User.findAndCountAll({
     limit: size,
@@ -59,27 +67,36 @@ function UserNotFoundException(){
   this.message = 'User not found';
 }
 
-app.get('/users/:id', async (req, res, next) => {
+const idNumberControl = (req, res, next) => {
   const id = Number.parseInt(req.params.id);
   if (Number.isNaN(id)) {
-    return next(new InvalidIdException());
+    throw new InvalidIdException();
   }
-  const user = await User.findOne({where: {id: id}});
-  if(!user) {
-   return next(new UserNotFoundException());
-  }
-  return res.send(user);
-})
+  next();
+}
 
-app.put('/users/:id', async (req, res) => {
+app.get('/users/:id', idNumberControl, async (req, res, next) => {
   const id = req.params.id;
   const user = await User.findOne({where: {id: id}});
-  user.username = req.body.username;
-  await user.save();
-  res.send('updated');
+  if(!user) {
+    next(new UserNotFoundException());
+  }
+  res.send(user);
 })
 
-app.delete('/users/:id', async (req, res) => {
+app.put('/users/:id', idNumberControl, async (req, res,next) => {
+  const id = req.params.id;
+  const user = await User.findOne({where: {id: id}});
+  if(!user) {
+    next(new UserNotFoundException());
+  }else{
+    user.username = req.body.username;
+    await user.save();
+    res.send('updated');
+  }
+})
+
+app.delete('/users/:id', idNumberControl, async (req, res) => {
   const id = req.params.id;
   await User.destroy({where: {id: id}});
   res.send('removed');
