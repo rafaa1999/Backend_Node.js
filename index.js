@@ -49,10 +49,26 @@ app.get('/users', async (req, res) => {
   });
 })
 
-app.get('/users/:id', async (req, res) => {
-  const id = req.params.id;
+function InvalidIdException(){
+  this.status = 400;
+  this.message = 'Invalid ID';
+}
+
+function UserNotFoundException(){
+  this.status = 404;
+  this.message = 'User not found';
+}
+
+app.get('/users/:id', async (req, res, next) => {
+  const id = Number.parseInt(req.params.id);
+  if (Number.isNaN(id)) {
+    return next(new InvalidIdException());
+  }
   const user = await User.findOne({where: {id: id}});
-  res.send(user);
+  if(!user) {
+   return next(new UserNotFoundException());
+  }
+  return res.send(user);
 })
 
 app.put('/users/:id', async (req, res) => {
@@ -67,6 +83,17 @@ app.delete('/users/:id', async (req, res) => {
   const id = req.params.id;
   await User.destroy({where: {id: id}});
   res.send('removed');
+})
+
+app.use((err, req, res, next) => {
+  res
+    .status(err.status)
+    .send(
+      {
+        message: err.message,
+        timestamp: Date.now(),
+        path: req.originalUrl
+      });
 })
 
 app.listen(3000, () => {
