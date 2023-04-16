@@ -6,5 +6,8 @@
   "username_null": "Le nom d'utilisateur ne peut pas être nul",
   "username_size": "Le nom d'utilisateur doit contenir au moins 4 caractères maximum",
   "email_invalid": "Doit être une adresse e-mail valide",
-  "email_inuse": "E-mail en cours d'utilisation"
+  "email_inuse": "E-mail en cours d'utilisation",
+  "forbidden": "Interdite",
+  "updated": "Mise à jour",
+  "removed": "Supprimé"
 }

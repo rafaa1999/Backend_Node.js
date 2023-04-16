@@ -5,17 +5,17 @@ const app = require('./src/app');
 
 
 sequelize.sync({ force: true }).then(async () => {
-  for(let i = 1; i <= 15; i++){
+  for(let i = 1; i <= 5; i++){
     const user = {
       username: `user${i}`,
       email: `user${i}@mail.com`,
       password: 'P4ssword'
     }
     await User.create(user);
-    const article = {
-      content: `article content ${i}`
-    }
-    await Article.create(article);
+    // const article = {
+    //   content: `article content ${i}`
+    // }
+    // await Article.create(article);
   }
 });
 

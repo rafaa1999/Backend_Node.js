@@ -6,5 +6,8 @@
   "username_null": "Username cannot be null",
   "username_size": "Username must have min 4 max 32 characters",
   "email_invalid": "Must be a valid e-mail address",
-  "email_inuse": "Email in use"
+  "email_inuse": "Email in use",
+  "forbidden": "Forbidden",
+  "updated": "Updated",
+  "removed": "Removed"
 }

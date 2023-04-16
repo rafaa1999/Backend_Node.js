@@ -7,6 +7,8 @@ const idNumberControl = require('../shared/idNumberControl');
 const UserService = require('./UserService');
 const { body, validationResult } = require('express-validator');
 const ValidationException = require('../shared/ValidationException');
+const basicAuthentication = require('../shared/basicAuthentication');
+
 
 router.post('/users', 
 body('username')
@@ -47,18 +49,40 @@ router.get('/users/:id', idNumberControl, async (req, res, next) => {
   }
 })
 
-router.put('/users/:id', idNumberControl, async (req, res) => {
+router.put('/users/:id', basicAuthentication, idNumberControl, async (req, res) => {
+  const authenticatedUser = req.authenticatedUser;
+  // const auth = req.headers.authorization
+  // console.log(auth)
+  // console.log(authenticatedUser)
+  // console.log(authenticatedUser.id)
+  if(!authenticatedUser) {
+    return res.status(403).send({message: req.t('forbidden')});
+  }
+
   const id = req.params.id;
+  
+  if(authenticatedUser.id != id) {
+    return res.status(403).send({message: req.t('forbidden')});
+  }
   const user = await User.findOne({where: {id: id}});
   user.username = req.body.username;
   await user.save();
-  res.send('updated');
+  res.send(req.t('updated'));
 })
 
-router.delete('/users/:id', idNumberControl, async (req, res) => {
+router.delete('/users/:id', idNumberControl, basicAuthentication, async (req, res) => {
+  const authenticatedUser = req.authenticatedUser;
+  if(!authenticatedUser) {
+    return res.status(403).send({message: req.t('forbidden')});
+  }
+
   const id = req.params.id;
+  
+  if(authenticatedUser.id != id) {
+    return res.status(403).send({message: req.t('forbidden')});
+  }
   await User.destroy({where: {id: id}});
-  res.send('removed');
+  res.send(req.t('removed'));
 })
 
 module.exports = router;
