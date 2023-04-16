@@ -9,5 +9,7 @@
   "email_inuse": "E-mail en cours d'utilisation",
   "forbidden": "Interdite",
   "updated": "Mise à jour",
-  "removed": "Supprimé"
+  "removed": "Supprimé",
+  "created": "Créé"
+
 }

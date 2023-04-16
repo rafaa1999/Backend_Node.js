@@ -51,10 +51,6 @@ router.get('/users/:id', idNumberControl, async (req, res, next) => {
 
 router.put('/users/:id', basicAuthentication, idNumberControl, async (req, res) => {
   const authenticatedUser = req.authenticatedUser;
-  // const auth = req.headers.authorization
-  // console.log(auth)
-  // console.log(authenticatedUser)
-  // console.log(authenticatedUser.id)
   if(!authenticatedUser) {
     return res.status(403).send({message: req.t('forbidden')});
   }
