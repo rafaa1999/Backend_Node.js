@@ -10,16 +10,16 @@ const ValidationException = require('../shared/ValidationException');
 
 router.post('/users', 
 body('username')
-  .notEmpty().withMessage('Username cannot be null')
+  .notEmpty().withMessage('username_null')
   .bail()
-  .isLength({min: 4, max: 32}).withMessage('Username must have min 4 max 32 characters'),
+  .isLength({min: 4, max: 32}).withMessage('username_size'),
 body('email')
-  .isEmail().withMessage('Must be a valid e-mail address')
+  .isEmail().withMessage('email_invalid')
   .bail()
   .custom(async (email) => {
     const user = await UserService.findByEmail(email)
     if(user){
-      throw new Error('Email in use');
+      throw new Error('email_inuse');
     }
   })
   ,
@@ -29,7 +29,7 @@ async (req, res, next) => {
     return next(new ValidationException(errors.array()));
   }
   await UserService.create(req.body);
-  res.send("success");
+  res.send({message: req.t("user_create_success")});
 })
 
 router.get('/users', pagination, async (req, res) => {

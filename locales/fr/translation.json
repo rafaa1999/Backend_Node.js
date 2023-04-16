@@ -1,0 +1,10 @@
+{
+  "user_create_success": "L'utilisateur est créé",
+  "user_not_found_exception": "Utilisateur non trouvé",
+  "invalid_id_exception": "Identifiant invalide",
+  "validation_exception": "Corps de requête invalide",
+  "username_null": "Le nom d'utilisateur ne peut pas être nul",
+  "username_size": "Le nom d'utilisateur doit contenir au moins 4 caractères maximum",
+  "email_invalid": "Doit être une adresse e-mail valide",
+  "email_inuse": "E-mail en cours d'utilisation"
+}
