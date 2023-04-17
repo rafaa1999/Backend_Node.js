@@ -10,6 +10,8 @@
   "forbidden": "Interdite",
   "updated": "Mise à jour",
   "removed": "Supprimé",
-  "created": "Créé"
+  "created": "Créé",
+  "upload_success": "Télécharger le succès",
+  "size_too_big": "Taille trop grande"
 
 }

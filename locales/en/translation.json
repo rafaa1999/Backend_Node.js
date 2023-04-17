@@ -10,5 +10,7 @@
   "forbidden": "Forbidden",
   "updated": "Updated",
   "removed": "Removed",
-  "created": "Created"
+  "created": "Created",
+  "upload_success": "Upload Success",
+  "size_too_big": "Size Too Big"
 }
