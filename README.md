@@ -1,6 +1,6 @@
 # Node.js Back-End 
 
-This is a small Node.js back-end application that utilizes various techniques commonly used in back-end development. These include internationalization (i18), validation, JWT authentication, Sequelize ORM, SQLite3 database, logger, error handler, cross-env, middleware, project structure, relational model, response body, GitHub Actions, and database migration.
+Node.js back-end application that utilizes various techniques commonly used in back-end development. These include internationalization (i18), validation, JWT authentication, Sequelize ORM, SQLite3 database, logger, error handler, cross-env, middleware, project structure, relational model, response body, GitHub Actions, and database migration.
 
 ## Table of Contents
 
